@@ -25,3 +25,26 @@ dias_acima_media = len([fat for fat in faturamento if fat > media])
 print(f'Menor faturamento: {menor}')
 print(f'Maior faturamento: {maior}')
 print(f'Dias com faturamento acima da média: {dias_acima_media}')
+
+import json
+import xml.etree.ElementTree as ET
+
+# Carregar os dados do arquivo XML
+tree = ET.parse('dados (2).xml')
+root = tree.getroot()
+
+# Converter os dados XML para JSON
+dados = [{'dia': int(row.find('dia').text), 'valor': float(row.find('valor').text)} for row in root.findall('row')]
+
+# Filtrar os dias com faturamento e calcular a média
+faturamento = [dia['valor'] for dia in dados if dia['valor'] > 0]
+media = sum(faturamento) / len(faturamento)
+
+# Encontrar o menor e maior faturamento e o número de dias acima da média
+menor = min(faturamento)
+maior = max(faturamento)
+dias_acima_media = len([fat for fat in faturamento if fat > media])
+
+print(f'Menor faturamento: {menor}')
+print(f'Maior faturamento: {maior}')
+print(f'Dias com faturamento acima da média: {dias_acima_media}')
